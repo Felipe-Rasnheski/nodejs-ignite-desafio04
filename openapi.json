@@ -1,0 +1,152 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge to written documentation with swagger",
+    "description": "This is an API Rent made to practice",
+    "version": "1.0.0",
+    "contact": {
+      "email": "rasnheski@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a user",
+        "description": "return a new user",
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                    "name": "Felipe Souza",
+                    "email": "rasnheski@gmail.com"
+                  }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          },
+          "400": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all user profiles",
+        "description": "user_id need to be passed as a header, return all user profiles if the user is admin",
+        "parameters": [{
+          "name": "user_id",
+          "in": "header",
+          "required": true,
+          "description": "id of user:",
+          "schema": {
+            "type": "string",
+            "required": [
+              "user_id"
+            ],
+            "properties": {
+              "user_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "style": "simple"
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get user"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Turn a user into an admin",
+        "description": "Turn a user into an admin if the user already exists",
+        "parameters": [{
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "id of user to turn as admin",
+          "schema": {
+            "type": "string",
+            "required": [
+              "user_id"
+            ],
+            "properties": {
+              "user_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "style": "simple"
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully turned the user into admin"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User profile"],
+        "summary": "Get a user profile",
+        "description": "return a user profile if the user exists",
+        "parameters": [{
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "id of user to turn as admin",
+          "schema": {
+            "type": "string",
+            "required": [
+              "user_id"
+            ],
+            "properties": {
+              "user_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "style": "simple"
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get user"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
